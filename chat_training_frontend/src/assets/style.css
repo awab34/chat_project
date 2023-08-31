@@ -1,0 +1,112 @@
+.mr-auto{
+    margin-right: auto;
+}
+.ml-auto{
+    margin-left: auto;
+}
+.mt-auto{
+    margin-top: auto;
+}
+.mb-auto{
+    margin-bottom: auto;
+}
+.backGroundColor{
+    background-color:#67FBF1 !important;
+  }
+  .width-fit-content{
+    width: fit-content;
+  }
+  .buttonColor{
+    color: #0B0C10 !important;
+    background-color: #55BDCA !important;
+    
+  }
+  .headerColor{
+    color: #67FBF1 !important;
+  }
+  .cardsColor{
+    background-color: #0B0C10 !important;
+  }
+  .divTextColor{
+    color: #0B0C10 !important;
+  }
+  .textColor{
+    color: #C5C6C8 !important;
+  }
+  .divBackground{
+    background-color: #FFF !important;
+  }
+.float-left{
+    float: left;
+}
+.float-right{
+    float: right;
+}
+.width-half{
+    width:50%;
+}
+.text-28 {
+        font-size: 28px !important;
+}
+.button-font-size{
+    font-size: 16px !important;
+    padding-top: 6px !important;
+    padding-bottom: 6px !important;
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+}
+.bold{
+    font-weight: bold;
+}
+.searchForm{
+    width: 550px;
+}
+
+.searchFormLabel{
+    width: 400px;
+    margin-top: auto;
+    margin-bottom: auto;
+    font-size: 20px;
+}
+@media only screen and (max-width: 600px) {
+    .text-28 {
+        font-size: 18px !important;
+    }
+    .searchForm{
+        width: 380px;
+    }
+    .button-font-size{
+        font-size: 12px !important;
+        padding-top: 4px !important;
+        padding-bottom: 4px !important;
+        padding-left: 8px !important;
+        padding-right: 8px !important;
+    }
+    .searchFormLabel{
+        width: 275px;
+        margin-top: auto;
+        margin-bottom: auto;
+        font-size: 15px;
+    }
+}
+@media only screen and (max-width: 400px) {
+    .text-28 {
+        font-size: 12px !important;
+    }
+    .searchForm{
+        width: 270px;
+    }
+    .button-font-size{
+        font-size: 8px !important;
+        padding-top: 3px !important;
+        padding-bottom: 3px !important;
+        padding-left: 6px !important;
+        padding-right: 6px !important;
+    }
+    .searchFormLabel{
+        width: 275px;
+        margin-top: auto;
+        margin-bottom: auto;
+        font-size: 10px;
+    }
+}
