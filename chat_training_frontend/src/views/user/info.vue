@@ -18,7 +18,7 @@ onMounted(()=>{
 <template>
     <main>
   
-  <HomePageHeader  />
+  <HomePageHeader active-page="0" />
   
   <suspense>
         

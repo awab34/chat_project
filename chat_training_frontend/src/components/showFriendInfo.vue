@@ -2,7 +2,7 @@
 
 <template>
   
-    <main class="mx-auto mt-5">
+    <main class="mx-auto mt-5" style="max-width: 900px;">
     
       <div class="rounded-3 mx-auto cardsColor">
       <div class="d-flex">
@@ -49,6 +49,9 @@ import axios from 'axios'
   return resultData.data;
       }catch(err){
        console.log(err);
+       if (err.response.data.message == "Your email address is not verified.") {
+      window.location.replace("/verify");
+     }
       }
       
     

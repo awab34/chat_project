@@ -55,8 +55,12 @@ function createGroup(){
 }).catch((err)=>{
   if(err.response.data.error){
                     localStorage.setItem("error", `${err.response.data.error}`);
+  }else if(err.response.data.message){
+                    localStorage.setItem("error", `${err.response.data.message}`);
   }else{
+    console.log(err);
     const errorsObject = err.response.data.errors;
+
     const keysArray = Object.keys(errorsObject);
     
     for(let i = 0; i < keysArray.length; i++){
@@ -79,7 +83,11 @@ for(let key of keys) {
 
   if(key == 'error0' || key == 'error1' || key == 'error2' || key == 'error3' || key == 'error'){
     console.log(localStorage.getItem(key));
-    $toast.error(`${localStorage.getItem(key)}`)
+    $toast.open({
+    message: `${localStorage.getItem(key)}`,
+    type:'error',
+    duration: 20000,
+})
     localStorage.removeItem(key)
 
   }
@@ -91,27 +99,27 @@ for(let key of keys) {
 
 <template>
 <main>
-    <div class="cardsColor rounded-2 mt-5 mx-auto" style="max-width: 750px;">
+    <div class=" shadow-lg p-3 mb-5 bg-white rounded  rounded-2 mt-5 mx-auto" style="max-width: 750px;">
     <form class="m-3 ">
     <div class="form-group">
-        <label for="exampleInputUserName1" class="textColor">Group Name:</label>
+        <label for="exampleInputUserName1" >Group Name:</label>
         <input class="form-control" v-model="groupName" id="exampleInputUserName1" type="text" placeholder="Default input">
     </div>
     <div class="form-group">
-        <label for="exampleFormControlTextarea1" class="textColor">Description:</label>
+        <label for="exampleFormControlTextarea1" >Description:</label>
         <textarea class="form-control mb-3" v-model="description"  id="exampleFormControlTextarea1" rows="3"></textarea>
     </div>
     <div class="form-group">
-      <p class="textColor text-28 ms-sm-3 ms-1 ms-md-5 bold ">Add Users:</p>
+      <p class="headerColor text-28 ms-sm-3 ms-1 ms-md-5 bold ">Add Users:</p>
       <div class="form-check" v-for="friend in userFriends.friends">
-    <input type="checkbox"  name="users[]" :value="friend.id" class="form-check-input ms-auto  " :key="friend.id" id="exampleCheck1" >
+    <input type="checkbox"  name="users[]" :value="friend.id" class="form-check-input ms-auto border border-1 border-dark  " :key="friend.id" id="exampleCheck1" >
     <label class="form-check-label ms-2  headerColor" for="exampleCheck1">{{ friend.name }}</label>
   </div>
     </div>
     
     
     <div class="d-flex justify-content-center" id="switch">
-        <button type="button" class="btn btn-primary buttonColor bold width-half mx-auto  mb-3 align-content-center" @click="createGroup">Update</button>
+        <button type="button" class="btn btn-primary cardsColor bold width-half mx-auto  mb-3 align-content-center" @click="createGroup">Create</button>
     </div>
     </form>
     </div>

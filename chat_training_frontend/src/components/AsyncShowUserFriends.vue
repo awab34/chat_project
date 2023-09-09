@@ -5,15 +5,15 @@
   <main class="mx-auto">
 
     <div v-if="chatsData.friends.length > 0">
-      <ul class="list-group mx-auto" v-for="friend in chatsData.friends" :key="friend.id">
-  <li class="list-group-item text-center d-flex">
+      <ul class="list-group mx-auto" v-for="friend in chatsData.friends" :key="friend.id" style="max-width: 900px;">
+  <li class="list-group-item text-center d-flex cardsColor2">
   <a :href="'/showfriendchat?'+friend.id" class=" my-auto text-decoration-none text-black text-center">
   <p class=" my-auto text-decoration-none text-center text-28 bold">{{ friend.name }}</p> 
        </a><a @click="unfriend(friend.id)" class="btn btn-danger ms-auto my-auto">Unfriend</a></li>
   
 </ul>
     </div>
-    <div v-else class="mx-auto"><p class="text-28 mx-auto mt-5"><b class="mx-auto">No Friends Found</b></p></div>
+    <div v-else class="mx-auto"><p class="text-28 mx-auto mt-5 text-center"><b class="mx-auto">No Friends Found</b></p></div>
 
   </main>
     
@@ -38,6 +38,9 @@ console.log(resultData.data);
 return resultData.data;
     }catch(err){
      console.log(err);
+     if (err.response.data.message == "Your email address is not verified.") {
+      window.location.replace("/verify");
+     }
     }
     
   

@@ -16,22 +16,35 @@
   .width-fit-content{
     width: fit-content;
   }
+  .buttonColor2{
+    color: #55BDCA !important;
+    background-color: #0B0C10 !important;
+  }
   .buttonColor{
     color: #0B0C10 !important;
     background-color: #55BDCA !important;
     
   }
   .headerColor{
-    color: #67FBF1 !important;
+    color: #0B0C10 !important;
   }
   .cardsColor{
-    background-color: #0B0C10 !important;
+    background-color: #5DD0B9 !important;
   }
   .divTextColor{
     color: #0B0C10 !important;
   }
+  .card-max-width{
+    max-width: 500px;
+  }
+  .cardsColor2{
+    background-color: #67FBF1 !important;
+  }
+  .textColor2{
+    color: #C3C3C5 !important;
+  }
   .textColor{
-    color: #C5C6C8 !important;
+    color: #CFEEEC !important;
   }
   .divBackground{
     background-color: #FFF !important;
@@ -44,6 +57,9 @@
 }
 .width-half{
     width:50%;
+}
+.alert-color{
+    color: firebrick;
 }
 .text-28 {
         font-size: 28px !important;
@@ -82,12 +98,18 @@
         padding-left: 8px !important;
         padding-right: 8px !important;
     }
+    .card-max-width{
+        max-width: 300px;
+      }
     .searchFormLabel{
         width: 275px;
         margin-top: auto;
         margin-bottom: auto;
         font-size: 15px;
     }
+}
+.pointer-change-cursor:hover{
+    cursor: pointer;
 }
 @media only screen and (max-width: 400px) {
     .text-28 {
@@ -103,6 +125,9 @@
         padding-left: 6px !important;
         padding-right: 6px !important;
     }
+    .card-max-width{
+        max-width: 200px;
+      }
     .searchFormLabel{
         width: 275px;
         margin-top: auto;

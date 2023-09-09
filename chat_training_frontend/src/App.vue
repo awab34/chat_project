@@ -2,7 +2,6 @@
 import {  RouterView } from 'vue-router'
 import '../node_modules/mosha-vue-toastify/dist/style.css'
 
-document.querySelector('body').classList.add("backGroundColor");
 
 
 </script>

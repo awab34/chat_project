@@ -5,6 +5,9 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rules\Password;
+use Illuminate\Auth\Events\Registered;
+
+
 class AuthController extends Controller{
     public function register(Request $request){
         $data = $request->validate([
@@ -21,8 +24,12 @@ class AuthController extends Controller{
             'password' => bcrypt($data['password']),
             'description'=> $data['description']
         ]);
+
+        event(new Registered($user));
+        
         $token = $user->createToken('awab')->plainTextToken;
 
+        
         return response([
             'user' => $user,
             'token' => $token
@@ -33,7 +40,7 @@ class AuthController extends Controller{
     public function login(Request $request){
         $credentials = $request->validate([
             'email' => 'required|email|string',
-            'password' =>'required',
+            'password' =>'required|string',
             'remember'=>'boolean',
         ]);
         $remember = $credentials['remember'] ?? false;
@@ -65,37 +72,87 @@ class AuthController extends Controller{
 
 
     public function update(Request $request){
+        
         $data = $request->validate([
             'name' => 'required|string',
-            'oldPassword'=>'required|string',
             'description'=>'required|string',
-            'email' => 'required|email|string',
-            'password' =>['required','confirmed',
-        Password::min(8)->numbers()->symbols()],
+            
         ]);
-
 
         $user = Auth::user();
         
-        if(!password_verify($data['oldPassword'],$user['password'])){
+        
+
+        $user->update([
+            'name' => $data['name'],
+            'description'=> $data['description']
+        ]);
+
+        return response([
+            'success'=>true
+        ]);
+    }
+    public function changeEmail(Request $request){
+        
+        $data = $request->validate([
+            'email' => 'required|email|string',
+            'password'=>'required|string',
+            
+        ]);
+
+        $user = Auth::user();
+        if(!password_verify($data['password'],$user['password'])){
+            return response([
+                'wrong'=>'wrong password'
+            ]); 
+        }
+        
+
+        $user->update([
+            'email' => $data['email'],
+            'email_verified_at'=>null
+        ]);
+
+        event(new Registered($user));
+
+        return response([
+            'success'=>true
+        ]);
+    }
+    public function resetPassword(Request $request){
+        
+        $data = $request->validate([
+            'oldpassword' => 'required|string',
+            'password' =>['required','confirmed',
+        Password::min(8)->numbers()->symbols()],
+            
+        ]);
+
+        $user = Auth::user();
+        
+        
+        if(!password_verify($data['oldpassword'],$user['password'])){
             return response([
                 'wrong'=>'wrong credintials'
             ]); 
         }
+
         $user->update([
-            'name' => $data['name'],
-            'email' => $data['email'],
             'password' => bcrypt($data['password']),
-            'description'=> $data['description']
         ]);
+        
+
         return response([
             'success'=>true
-            ]);
-        
-
-        
+        ]);
     }
 
+    public function showEmail(){
+        $user = Auth::user();
+        return response([
+            'email' => $user->email
+        ]);
+    }
 
 
     public function userData(){

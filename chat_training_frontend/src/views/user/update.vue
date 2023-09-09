@@ -1,5 +1,4 @@
 <script setup>
-import axios from 'axios'
 import UpdateUserInformation from '../../components/updateUserInformation.vue';
 import HomePageHeader from '../../components/homePageHeader.vue';
 
@@ -10,7 +9,7 @@ import HomePageHeader from '../../components/homePageHeader.vue';
 <template>
   
   <main>
-    <HomePageHeader />
+    <HomePageHeader active-page="0" />
   
   <suspense>
         

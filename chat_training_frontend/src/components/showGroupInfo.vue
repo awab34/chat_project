@@ -23,6 +23,9 @@ async function getUserInfo(){
   return resultData.data;
       }catch(err){
        console.log(err);
+       if (err.response.data.message == "Your email address is not verified.") {
+      window.location.replace("/verify");
+     }
       }
 }
 

@@ -26,6 +26,7 @@ function registerFunction(){
 
                 })
                 .catch(function (error) {
+                  console.log(error);
                   if(error.response.data.error){
                     localStorage.setItem("error", `${error.response.data.error}`);
   }else{
@@ -50,7 +51,12 @@ for(let key of keys) {
 
   if(key == 'error0' || key == 'error1' || key == 'error2' || key == 'error3' || key == 'error'){
     console.log(localStorage.getItem(key));
-    $toast.error(`${localStorage.getItem(key)}`)
+    
+    $toast.open({
+    message: `${localStorage.getItem(key)}`,
+    type:'error',
+    duration: 20000,
+})
     localStorage.removeItem(key)
 
   }
@@ -62,32 +68,32 @@ for(let key of keys) {
 <template>
   
   <main>
-    <div class="cardsColor rounded-2 mx-auto" style="max-width: 750px;">
+    <div class="shadow-lg p-3 mb-5 bg-white rounded  rounded-2 mt-5 mx-auto" style="max-width: 750px;">
     <form class="m-3 " >
       <div class="form-group">
-    <label for="exampleInputUserName1" class="textColor">User Name:</label>
+    <label for="exampleInputUserName1" >User Name:</label>
     <input class="form-control" v-model="userName" id="exampleInputUserName1" type="text" placeholder="Default input">
   </div>
       
   <div class="form-group">
-    <label for="exampleInputEmail1" class="textColor">Email address:</label>
+    <label for="exampleInputEmail1" >Email address:</label>
     <input type="email" class="form-control" v-model="email" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
   </div>
   <div class="form-group">
-    <label for="exampleInputPassword1" class="textColor">Password:</label>
+    <label for="exampleInputPassword1" >Password:</label>
     <input type="password" class="form-control" v-model="password" id="exampleInputPassword1" placeholder="Password">
   </div>
   <div class="form-group">
-    <label for="exampleInputPassword2" class="textColor">Repeat Password:</label>
+    <label for="exampleInputPassword2" >Repeat Password:</label>
     <input type="password" class="form-control" v-model="password_confirmation" id="exampleInputPassword2" placeholder="Password">
   </div>
   <div class="form-group mb-3 pb-3">
-    <label for="exampleFormControlTextarea1" class="textColor">Description:</label>
+    <label for="exampleFormControlTextarea1" >Description:</label>
     <textarea class="form-control" v-model="description" id="exampleFormControlTextarea1" rows="3"></textarea>
   </div>
   <div id="switch">
-    <button type="button" @click="registerFunction" class="btn btn-primary mb-3  text-28 buttonColor width-half buttonColor">Submit</button>
-  <RouterLink class="btn btn-primary mb-3 width-half text-28 buttonColor buttonColor " to="/">Login</RouterLink>
+    <button type="button" @click="registerFunction" class="btn btn-primary mb-3  text-28 cardsColor width-half ">Submit</button>
+  <RouterLink class="btn btn-primary mb-3 width-half text-28 cardsColor  " to="/">Login</RouterLink>
   </div>
   
 </form>

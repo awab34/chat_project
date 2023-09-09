@@ -3,10 +3,11 @@
 import HomePageHeader from '../../components/homePageHeader.vue'
 import { defineAsyncComponent } from 'vue';
 
+
 const AsyncShowFriendRequests = defineAsyncComponent(() =>
   import('../../components/AsyncShowFriendRequests.vue')
 );
-  
+
   </script>
 <template>
   

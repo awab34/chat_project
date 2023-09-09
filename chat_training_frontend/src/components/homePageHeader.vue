@@ -35,8 +35,8 @@ async function logout(){
   <main>
     <nav class="navbar navbar-dark cardsColor fixed-top">
   <div class="container-fluid">
-    <a class="navbar-brand textColor" href="#">header</a>
-    <button class="navbar-toggler textColor" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
+    <a class="navbar-brand headerColor" href="#">header</a>
+    <button class="navbar-toggler headerColor" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
@@ -50,7 +50,13 @@ async function logout(){
             <a :class="'nav-link ' +( activePage == '1'? 'active' :'')" aria-current="page" href="/home">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/userinfo">Account Info</a>
+            <a :class="'nav-link ' +( activePage == '0'? 'active' :'')"  href="/userinfo">Account Info</a>
+          </li>
+          <li class="nav-item">
+            <a :class="'nav-link '" v-if="activePage == '0'" href="/resetpassword">Reset Password</a>
+          </li>
+          <li class="nav-item"> 
+            <a :class="'nav-link '" v-if="activePage == '0'" href="/change-email">Change Email</a>
           </li>
           <li class="nav-item">
             <a :class="'nav-link ' + (activePage == '2'? 'active' :'')" href="/createfriends">Add New Friends</a>

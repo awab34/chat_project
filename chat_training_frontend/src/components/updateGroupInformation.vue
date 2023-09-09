@@ -30,6 +30,9 @@ async function getGroupInfo(){
   return resultData.data;
       }catch(err){
        console.log(err);
+       if (err.response.data.message == "Your email address is not verified.") {
+      window.location.replace("/verify");
+     }
       }
 }
 const GroupInfo = await getGroupInfo();
@@ -63,8 +66,12 @@ if(response.data.success){
 }).catch((err)=>{
   if(err.response.data.error){
                     localStorage.setItem("error", `${err.response.data.error}`);
+  }else if(err.response.data.message){
+                    localStorage.setItem("error", `${err.response.data.message}`);
   }else{
+    console.log(err);
     const errorsObject = err.response.data.errors;
+
     const keysArray = Object.keys(errorsObject);
     
     for(let i = 0; i < keysArray.length; i++){
@@ -98,7 +105,11 @@ for(let key of keys) {
 
   if(key == 'error0' || key == 'error1' || key == 'error2' || key == 'error3' || key == 'error'){
     console.log(localStorage.getItem(key));
-    $toast.error(`${localStorage.getItem(key)}`)
+    $toast.open({
+    message: `${localStorage.getItem(key)}`,
+    type:'error',
+    duration: 20000,
+})
     localStorage.removeItem(key)
 
   }

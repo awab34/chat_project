@@ -19,7 +19,7 @@ const props = defineProps({
 
 <template>
   <main class="mt-5">
-
+    <div v-if="messagesArray.length > 0">
     <div v-for="message in messagesArray" :key="message.id" >
     <div v-if="userId == message.senderId" class="d-flex my-2 cardsColor rounded-3 mx-auto" style="max-width: 700px;">
      <div class="d-block w-100" >
@@ -40,6 +40,9 @@ const props = defineProps({
         
     </div>
         
-        
+        </div>
+        <div v-else>
+      <h1 class="text-28 text-center">No Messages Found Please Insert New Messages</h1>
+    </div> 
   </main>
 </template>

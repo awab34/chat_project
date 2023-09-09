@@ -2,32 +2,13 @@
 
 import axios from 'axios'
 import {onMounted} from 'vue'
-import {$toast} from '../main.js'
+import {$toast} from '../../main.js'
+import HomePageHeader from '../../components/homePageHeader.vue';
 
-let userName = null;
-let description = null;
-async function getUserInfo(){
-    try{
-        const resultData = await axios.request({
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("accessToken")}`
-    },
-    method: "GET",
-    url: `http://localhost:8000/api/user-data`
-  });
-  console.log(resultData.data);
-  console.log(resultData.data.userData.name);
-  userName = resultData.data.userData.name;
-  description = resultData.data.userData.description;
-  return resultData.data;
-      }catch(err){
-       console.log(err);
-       if (err.response.data.message == "Your email address is not verified.") {
-      window.location.replace("/verify");
-     }
-      }
-}
-const userInfoData = await getUserInfo();
+let oldPassword = null;
+let password = null;
+let password_confirmation = null;
+
 
 function updateUserAccount(){
   document.getElementById("switch").innerHTML = "<div class='d-flex justify-content-center pb-3'><div class='spinner-border text-primary' role='status'><span class='sr-only'></span></div></div>"
@@ -37,11 +18,12 @@ function updateUserAccount(){
     Authorization: `Bearer ${localStorage.getItem("accessToken")}`
   },
   params:{
-    name:userName,
-    description:description
+    oldpassword:oldPassword,
+    password:password,
+    password_confirmation:password_confirmation
 },
   method: "PUT",
-  url: `http://localhost:8000/api/update-user`
+  url: `http://localhost:8000/api/reset-password`
 }).then((response)=>{
   if(response.data.success){
   localStorage.setItem("success", true);
@@ -51,7 +33,7 @@ function updateUserAccount(){
   if(err.response.data.error){
                     localStorage.setItem("error", `${err.response.data.error}`);
   }else if(err.response.data.message){
-                    localStorage.setItem("error", `${err.response.data.message}`);
+    localStorage.setItem("error", "Something went wrong please try again");
   }else{
     console.log(err);
     const errorsObject = err.response.data.errors;
@@ -64,7 +46,7 @@ function updateUserAccount(){
 
 
                   }
-               location.reload();console.log(err);
+               location.reload();
 });
 }
 
@@ -94,16 +76,23 @@ for(let key of keys) {
 
 <template>
 <main>
+    <HomePageHeader activePage="0" />
     <div class=" shadow-lg p-3 mb-5 bg-white rounded  rounded-2 mt-5 mx-auto" style="max-width: 750px;">
     <form class="m-3 ">
     <div class="form-group">
-        <label for="exampleInputUserName1" >User Name:</label>
-        <input class="form-control" v-model="userName" id="exampleInputUserName1" type="text" placeholder="Default input">
+        <label for="exampleInputUserName1" >Old Password:</label>
+        <input class="form-control" v-model="oldPassword" id="exampleInputUserName1" type="password" placeholder="Default input">
+    </div>
+      
+    <div class="form-group">
+        <label for="exampleInputUserName1" >New Password:</label>
+        <input class="form-control" v-model="password" id="exampleInputUserName1" type="password" placeholder="Default input">
     </div>
     <div class="form-group">
-        <label for="exampleFormControlTextarea1" >Description:</label>
-        <textarea class="form-control mb-3" v-model="description"  id="exampleFormControlTextarea1" rows="3"></textarea>
+        <label for="exampleInputUserName1" >Repeat New Password Password:</label>
+        <input class="form-control mb-3" v-model="password_confirmation" id="exampleInputUserName1" type="password" placeholder="Default input">
     </div>
+    
     <div class="d-flex justify-content-center" id="switch">
         <button type="button" class="btn btn-primary cardsColor bold width-half mx-auto  mb-3 align-content-center" @click="updateUserAccount">Update</button>
     </div>

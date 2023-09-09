@@ -54,19 +54,39 @@ onMounted(() => {
   
   if(localStorage.getItem("error")){
     console.log(localStorage.getItem("error"));
-    $toast.error(`${localStorage.getItem("error")}`)
+    $toast.open({
+    message: `${localStorage.getItem("error")}`,
+    type:'error',
+    duration: 20000,
+})
     localStorage.removeItem("error")
   }else{
     if(localStorage.getItem("password") && localStorage.getItem("email")){
-                      $toast.error(`${localStorage.getItem("email")}`)
-                      $toast.error(`${localStorage.getItem("password")}`)
+                      $toast.open({
+    message: `${localStorage.getItem("email")}`,
+    type:'error',
+    duration: 20000,
+})
+                      $toast.open({
+    message: `${localStorage.getItem("password")}`,
+    type:'error',
+    duration: 20000,
+})
                       localStorage.removeItem("email")
                       localStorage.removeItem("password")
                     }else if(localStorage.getItem("password")){
-                      $toast.error(`${localStorage.getItem("password")}`)
+                      $toast.open({
+    message: `${localStorage.getItem("password")}`,
+    type:'error',
+    duration: 20000,
+})
                       localStorage.removeItem("password")
                     }else if(localStorage.getItem("email")){
-                      $toast.error(`${localStorage.getItem("email")}`)
+                      $toast.open({
+    message: `${localStorage.getItem("email")}`,
+    type:'error',
+    duration: 20000,
+})
                       localStorage.removeItem("email")
                     }
                   
@@ -80,25 +100,25 @@ onMounted(() => {
   
   <main>
 
-  <div class="cardsColor rounded-2 mx-auto" style="max-width: 750px;">
+  <div class="shadow-lg p-3 mb-5 bg-white rounded  rounded-2 mt-5 mx-auto" style="max-width: 750px;">
     <form class="m-3 " >
   <div class="form-group">
-    <label for="exampleInputEmail1" class="textColor">Email address</label>
+    <label for="exampleInputEmail1" >Email address</label>
     <input type="email" name="email"  v-model="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
   </div>
   <div class="form-group" >
-    <label for="exampleInputPassword1" class="textColor">Password</label>
+    <label for="exampleInputPassword1" >Password</label>
     <input type="password" name="password"  v-model="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
   </div>
   <div class="form-check">
     <input type="checkbox" name="remember"  v-model="rememberMe" class="form-check-input" id="exampleCheck1">
-    <label class="form-check-label textColor"  for="exampleCheck1">Remember Me</label>
+    <label class="form-check-label "  for="exampleCheck1">Remember Me</label>
   </div>
   
   
 <div id="switch">
-  <button @click="loginFunction" type="button" class="btn btn-primary mb-3 text-28 buttonColor width-half ">Submit</button>
-  <RouterLink class="btn btn-primary mb-3 width-half text-28 buttonColor" to="/register">New User</RouterLink>
+  <button @click="loginFunction" type="button" class="btn btn-primary mb-3 text-28 cardsColor width-half ">Submit</button>
+  <RouterLink class="btn btn-primary mb-3 width-half text-28 cardsColor" to="/register">New User</RouterLink>
 </div>
   
 </form>

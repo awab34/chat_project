@@ -1,7 +1,8 @@
 
 <script setup>
 import axios from 'axios'
-
+import { onMounted } from 'vue';
+import {$toast} from '../main.js'
 
 
   const getChats = async ()=>{
@@ -18,6 +19,9 @@ import axios from 'axios'
   return resultData.data;
       }catch(err){
        console.log(err);
+       if (err.response.data.message == "Your email address is not verified.") {
+          window.location.replace("/verify");
+      }
       }
       
     
@@ -39,15 +43,53 @@ import axios from 'axios'
   url: `http://localhost:8000/api/accept-friend`
 }).then((response)=>{
   
+                  
+                  if(id == 2){
+                    localStorage.setItem("success", `Rejected`);
+                  }else{
+                    localStorage.setItem("success", `Accepted`);
+                  }
+                  
     location.reload();
   
   
 }).catch((err)=>{
-  console.log(err);
+  if(err.response.data.error){
+                    localStorage.setItem("error", `${err.response.data.error}`);
+  }else if(err.response.data.message){
+                    localStorage.setItem("error", `${err.response.data.message}`);
+  }else{
+    console.log(err);
+    const errorsObject = err.response.data.errors;
+
+    const keysArray = Object.keys(errorsObject);
+    
+    for(let i = 0; i < keysArray.length; i++){
+      localStorage.setItem(`error${i}`, `${errorsObject[keysArray[i]][0]}`);
+    }
+
+
+                  }
+
+
+                  
+               location.reload();
 });
   }
 
-  
+  onMounted(() => {
+  if(localStorage.getItem("success")){
+    $toast.success(`${localStorage.getItem("success")}`)
+    localStorage.removeItem("success")
+  }else if(localStorage.getItem("error")){
+    $toast.open({
+    message: `${localStorage.getItem("error")}`,
+    type:'error',
+    duration: 20000,
+})
+    localStorage.removeItem("error")
+  }
+  })
   
   </script>
 <template>
@@ -59,9 +101,9 @@ import axios from 'axios'
         
     
             
-    <div v-if="requestData.friendRequests.length > 0" class="mt-5">
-        <ul class="list-group mx-auto" v-for="friendRequest in requestData.friendRequests" :key="friendRequest.id">
-    <li class="list-group-item text-center d-flex">
+    <div v-if="requestData.friendRequests.length > 0" class="mt-5 ">
+        <ul class="list-group mx-auto " v-for="friendRequest in requestData.friendRequests" :key="friendRequest.id" style="max-width: 900px;">
+    <li class="list-group-item text-center d-flex cardsColor2">
     <p class=" text-decoration-none text-center text-28 bold my-auto">{{ friendRequest.name }}</p> 
     <form class="my-auto ms-auto">
            
@@ -79,7 +121,7 @@ import axios from 'axios'
     
   </ul>
     </div>
-    <div v-else class="mx-auto"><p class="text-28 mx-auto mt-5"><b class="mx-auto">No Requests Found</b></p></div>
+    <div v-else class="mx-auto"><p class="text-28 mx-auto mt-5 text-center"><b class="mx-auto">No Requests Found</b></p></div>
   
   
     </main>

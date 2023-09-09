@@ -14,6 +14,9 @@ async function getUserInfo(){
   return resultData.data;
       }catch(err){
        console.log(err);
+       if (err.response.data.message == "Your email address is not verified.") {
+      window.location.replace("/verify");
+     }
       }
 }
 const userInfoData = await getUserInfo();
@@ -22,7 +25,7 @@ const userInfoData = await getUserInfo();
 
 <template>
     <main>
-        <div class="rounded-3 mx-auto cardsColor">
+        <div class="rounded-3 mx-auto cardsColor" style="max-width: 900px;">
       <div class="d-flex">
         <p class="textColor text-28 ms-sm-3 ms-1 ms-md-5 bold ">User Name:</p>
         <p class="headerColor text-28 mx-auto ms-2">{{ userInfoData.userData.name }}</p>

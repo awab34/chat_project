@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -17,15 +18,46 @@ Route::post('/register',[AuthController::class,'register']);
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::get('/email/verify', function () {
+    return  response([
+        'notVerified' => true
+      ],200);
+})->middleware('auth:sanctum')->name('verification.notice');
+ 
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill();
+ 
+    return  response([
+        'verified' => true,
+      ],200);
+})->middleware(['auth:sanctum', 'signed'])->name('verification.verify');
+
+Route::get('/show-email', 'AuthController@showEmail')->middleware(['auth:sanctum']);
+
+Route::put('/change-email-before-verification', 'AuthController@changeEmail')->middleware(['auth:sanctum']);
+
+Route::put('/change-email', 'AuthController@changeEmail')->middleware(['auth:sanctum','verified']);
+
+Route::post('/email/verification-notification', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+ 
+    return  response([
+        'notVerified' => true
+      ],200);
+
+})->middleware(['auth:sanctum', 'throttle:6,1'])->name('verification.send');
+
 Route::post('/login',[AuthController::class,'login']);
 
-Route::middleware(['auth:sanctum'])->group(function () {
+Route::middleware(['auth:sanctum','verified'])->group(function () {
 
     Route::get('user-data','AuthController@userData');
 
     Route::get('logout','AuthController@logout');
 
     Route::put('update-user','AuthController@update');
+
+    Route::put('reset-password','AuthController@resetPassword');
    
     Route::get('group-info/{id}','GroupController@showGroupInfo');
 
@@ -62,6 +94,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('request-friend/{id}','FriendRequestController@store' )->name('request.friend');
     Route::get('show-friend-requests','FriendRequestController@show_request' )->name('show.friendrequest');
 
-    
+
     
 });
