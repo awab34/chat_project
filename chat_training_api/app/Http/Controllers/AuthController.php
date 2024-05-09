@@ -25,7 +25,6 @@ class AuthController extends Controller{
             'description'=> $data['description']
         ]);
 
-        event(new Registered($user));
         
         $token = $user->createToken('awab')->plainTextToken;
 
@@ -113,7 +112,6 @@ class AuthController extends Controller{
             'email_verified_at'=>null
         ]);
 
-        event(new Registered($user));
 
         return response([
             'success'=>true

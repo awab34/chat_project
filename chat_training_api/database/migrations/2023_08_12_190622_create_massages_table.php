@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('massages', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->text('content');
+            $table->longText('content');
             $table->bigInteger('sender_id')->unsigned();
             $table->bigInteger('receiver_id')->unsigned();
             $table->tinyInteger('receiver_type');

@@ -49,7 +49,7 @@ Route::post('/email/verification-notification', function (Request $request) {
 
 Route::post('/login',[AuthController::class,'login']);
 
-Route::middleware(['auth:sanctum','verified'])->group(function () {
+Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::get('user-data','AuthController@userData');
 
